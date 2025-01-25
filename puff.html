@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snacks Gallery</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 2em;
+            color: #333;
+        }
+
+        /* Gallery container */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Snack item container */
+        .snack-item {
+            text-align: center;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            background-color: white;
+        }
+
+        /* Image styling */
+        img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Snack title styling */
+        h3 {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        .price {
+            margin: 10px 0;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Quantity Controls */
+        .quantity-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .quantity-controls button {
+            background-color: #ff85a2;
+            color: white;
+            padding: 5px 10px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quantity-controls button:hover {
+            background-color: #ff5f7a;
+        }
+
+        .quantity-controls input {
+            width: 40px;
+            text-align: center;
+            font-size: 1.2em;
+            margin: 0 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Add to Cart Button */
+        .add-to-cart-btn {
+            background-color: #ff85a2;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #ff5f7a;
+        }
+
+        /* Cart Summary */
+        .cart-summary {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            width: 80%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cart-summary h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .cart-summary .total-price {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Snacks Gallery</h1>
+    <div class="gallery">
+        <!-- Veg Puff -->
+        <div class="snack-item">
+            <img src="./vegpuff1.jpg" alt="Veg Puff">
+            <h3>Veg Puff</h3>
+            <div class="price">Price: $15</div>
+            <div class="quantity-controls">
+                <button onclick="updateQuantity('veg-puff', 'decrement')">-</button>
+                <input type="number" id="veg-puff" value="0" min="0" readonly>
+                <button onclick="updateQuantity('veg-puff', 'increment')">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart('Veg Puff', 15, 'veg-puff')">Add to Cart</button>
+        </div>
+
+        <!-- Chicken Puff -->
+        <div class="snack-item">
+            <img src="./chickenpuff2.jpg" alt="Chicken Puff">
+            <h3>Chicken Puff</h3>
+            <div class="price">Price: $25</div>
+            <div class="quantity-controls">
+                <button onclick="updateQuantity('chicken-puff', 'decrement')">-</button>
+                <input type="number" id="chicken-puff" value="0" min="0" readonly>
+                <button onclick="updateQuantity('chicken-puff', 'increment')">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart('Chicken Puff', 25, 'chicken-puff')">Add to Cart</button>
+        </div>
+
+        <!-- Egg Puff -->
+        <div class="snack-item">
+            <img src="./eggpuff3.jpg" alt="Egg Puff">
+            <h3>Egg Puff</h3>
+            <div class="price">Price: $20</div>
+            <div class="quantity-controls">
+                <button onclick="updateQuantity('egg-puff', 'decrement')">-</button>
+                <input type="number" id="egg-puff" value="0" min="0" readonly>
+                <button onclick="updateQuantity('egg-puff', 'increment')">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart('Egg Puff', 20, 'egg-puff')">Add to Cart</button>
+        </div>
+
+        <!-- Paneer Puff -->
+        <div class="snack-item">
+            <img src="./pannerpuff4.jpg" alt="Paneer Puff">
+            <h3>Paneer Puff</h3>
+            <div class="price">Price: $30</div>
+            <div class="quantity-controls">
+                <button onclick="updateQuantity('paneer-puff', 'decrement')">-</button>
+                <input type="number" id="paneer-puff" value="0" min="0" readonly>
+                <button onclick="updateQuantity('paneer-puff', 'increment')">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart('Paneer Puff', 30, 'paneer-puff')">Add to Cart</button>
+        </div>
+
+        <!-- Veg Cutlet -->
+        <div class="snack-item">
+            <img src="./Vegcutlet.jpg" alt="Veg Cutlet">
+            <h3>Veg Cutlet</h3>
+            <div class="price">Price: $30</div>
+            <div class="quantity-controls">
+                <button onclick="updateQuantity('veg-cutlet', 'decrement')">-</button>
+                <input type="number" id="veg-cutlet" value="0" min="0" readonly>
+                <button onclick="updateQuantity('veg-cutlet', 'increment')">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart('Veg Cutlet', 30, 'veg-cutlet')">Add to Cart</button>
+        </div>
+
+        <!-- Chicken Cutlet -->
+        <div class="snack-item">
+            <img src="./chickencutlet.jpg" alt="Chicken Cutlet">
+            <h3>Chicken Cutlet</h3>
+            <div class="price">Price: $30</div>
+            <div class="quantity-controls">
+                <button onclick="updateQuantity('chicken-cutlet', 'decrement')">-</button>
+                <input type="number" id="chicken-cutlet" value="0" min="0" readonly>
+                <button onclick="updateQuantity('chicken-cutlet', 'increment')">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart('Chicken Cutlet', 30, 'chicken-cutlet')">Add to Cart</button>
+        </div>
+
+        <!-- Paneer Cutlet -->
+        <div class="snack-item">
+            <img src="./pannercutlet.jfif" alt="Paneer Cutlet">
+            <h3>Paneer Cutlet</h3>
+            <div class="price">Price: $30</div>
+            <div class="quantity-controls">
+                <button onclick="updateQuantity('paneer-cutlet', 'decrement')">-</button>
+                <input type="number" id="paneer-cutlet" value="0" min="0" readonly>
+                <button onclick="updateQuantity('paneer-cutlet', 'increment')">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart('Paneer Cutlet', 30, 'paneer-cutlet')">Add to Cart</button>
+        </div>
+
+        <!-- Samosa -->
+        <div class="snack-item">
+            <img src="./samosa.jpg" alt="Samosa">
+            <h3>Samosa</h3>
+            <div class="price">Price: $30</div>
+            <div class="quantity-controls">
+                <button onclick="updateQuantity('samosa', 'decrement')">-</button>
+                <input type="number" id="samosa" value="0" min="0" readonly>
+                <button onclick="updateQuantity('samosa', 'increment')">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart('Samosa', 30, 'samosa')">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="cart-summary">
+        <h3>Cart Summary</h3>
+        <div id="cart-items"></div>
+        <div class="total-price">
+            Total Price: $<span id="total-price">0</span>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+
+        // Update the quantity of a snack
+        function updateQuantity(snackId, action) {
+            const inputField = document.getElementById(snackId);
+            let quantity = parseInt(inputField.value);
+
+            if (action === 'increment') {
+                quantity++;
+            } else if (action === 'decrement' && quantity > 0) {
+                quantity--;
+            }
+
+            inputField.value = quantity;
+        }
+
+        // Add item to cart and update total
+        function addToCart(snackName, price, snackId) {
+            const quantity = parseInt(document.getElementById(snackId).value);
+            if (quantity > 0) {
+                const itemTotal = price * quantity;
+                cart.push({ snackName, price, quantity, itemTotal });
+
+                updateCart();
+            } else {
+                alert('Please select a quantity before adding to cart.');
+            }
+        }
+
+        // Update cart and total price
+        function updateCart() {
+            let cartItemsHtml = '';
+            let totalPrice = 0;
+
+            cart.forEach(item => {
+                cartItemsHtml += `<div>${item.snackName} (x${item.quantity}): $${item.itemTotal}</div>`;
+                totalPrice += item.itemTotal;
+            });
+
+            document.getElementById('cart-items').innerHTML = cartItemsHtml;
+            document.getElementById('total-price').textContent = totalPrice;
+        }
+    </script>
+</body>
+</html>
