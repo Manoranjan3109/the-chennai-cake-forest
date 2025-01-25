@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 20px;
+            padding: 20px;
+        }
+        .cookie {
+            text-align: center;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            transition: transform 0.2s ease-in-out;
+        }
+        .cookie:hover {
+            transform: scale(1.05);
+        }
+        .cookie img {
+            width: 300px;
+            height: 300px;
+            border-radius: 8px;
+        }
+        .cookie h2 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: #333;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .controls button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .controls button:hover {
+            background-color: #0056b3;
+        }
+        .controls .quantity {
+            margin: 0 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .total {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+    </style>
+    <script>
+        const prices = [2.5, 3, 3.5, 4, 3, 2.5]; // Prices for each cookie
+
+        function updateQuantity(id, action, index) {
+            const quantityElement = document.getElementById(id);
+            let quantity = parseInt(quantityElement.textContent);
+            if (action === 'add') {
+                quantity += 1;
+            } else if (action === 'subtract' && quantity > 0) {
+                quantity -= 1;
+            }
+            quantityElement.textContent = quantity;
+            updateTotalCost();
+        }
+
+        function updateTotalCost() {
+            const quantities = Array.from(document.querySelectorAll('.quantity')).map(q => parseInt(q.textContent));
+            const total = quantities.reduce((sum, qty, i) => sum + qty * prices[i], 0);
+            document.getElementById('totalCost').textContent = `Total Cost: $${total.toFixed(2)}`;
+        }
+    </script>
+</head>
+<body>
+    <div class="gallery">
+        <div class="cookie">
+            <img src="./peanutbutter cookies.jpg" alt="Peanut butter cookies">
+            <h2>Peanut Butter Cookies ($2.50)</h2>
+            <div class="controls">
+                <button onclick="updateQuantity('quantity1', 'subtract', 0)">-</button>
+                <span class="quantity" id="quantity1">0</span>
+                <button onclick="updateQuantity('quantity1', 'add', 0)">+</button>
+            </div>
+        </div>
+        <div class="cookie">
+            <img src="chocolatecookies.jpg" alt="Chocolate chip cookies">
+            <h2>Chocolate Chip Cookies ($3.00)</h2>
+            <div class="controls">
+                <button onclick="updateQuantity('quantity2', 'subtract', 1)">-</button>
+                <span class="quantity" id="quantity2">0</span>
+                <button onclick="updateQuantity('quantity2', 'add', 1)">+</button>
+            </div>
+        </div>
+        <div class="cookie">
+            <img src="whitechocolate.jpg" alt="White chocolate macadamia nut cookies">
+            <h2>White Chocolate Macadamia Nut Cookies ($3.50)</h2>
+            <div class="controls">
+                <button onclick="updateQuantity('quantity3', 'subtract', 2)">-</button>
+                <span class="quantity" id="quantity3">0</span>
+                <button onclick="updateQuantity('quantity3', 'add', 2)">+</button>
+            </div>
+        </div>
+        <div class="cookie">
+            <img src="whoopie.jfif" alt="Whoopie pie">
+            <h2>Whoopie Pie ($4.00)</h2>
+            <div class="controls">
+                <button onclick="updateQuantity('quantity4', 'subtract', 3)">-</button>
+                <span class="quantity" id="quantity4">0</span>
+                <button onclick="updateQuantity('quantity4', 'add', 3)">+</button>
+            </div>
+        </div>
+        <div class="cookie">
+            <img src="doublechocolate.jpg" alt="Double chocolate chip cookies">
+            <h2>Double Chocolate Chip Cookies ($3.00)</h2>
+            <div class="controls">
+                <button onclick="updateQuantity('quantity5', 'subtract', 4)">-</button>
+                <span class="quantity" id="quantity5">0</span>
+                <button onclick="updateQuantity('quantity5', 'add', 4)">+</button>
+            </div>
+        </div>
+        <div class="cookie">
+            <img src="shortbreadcookies.jpg" alt="Shortbread cookies">
+            <h2>Shortbread ($2.50)</h2>
+            <div class="controls">
+                <button onclick="updateQuantity('quantity6', 'subtract', 5)">-</button>
+                <span class="quantity" id="quantity6">0</span>
+                <button onclick="updateQuantity('quantity6', 'add', 5)">+</button>
+            </div>
+        </div>
+    </div>
+    <div class="total" id="totalCost">Total Cost: $0.00</div>
+</body>
+</html>
