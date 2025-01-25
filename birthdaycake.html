@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Cake Menu</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fdf6e3;
+        }
+
+        .menu-card {
+            max-width: 800px;
+            margin: 30px auto;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .menu-header {
+            background: #ff85a2;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .menu-header h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        .menu-content {
+            padding: 20px;
+        }
+
+        .menu-section {
+            margin-bottom: 20px;
+        }
+
+        .menu-section h2 {
+            font-size: 1.5em;
+            color: #ff85a2;
+            border-bottom: 2px solid #ffe1e9;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .cakes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .cake-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #f4f4f4;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .cake-item span {
+            font-size: 1em;
+        }
+
+        .price {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .buy-now-btn {
+            background-color: #ff85a2;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buy-now-btn:hover {
+            background-color: #ff5f7a;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-card">
+        <div class="menu-header">
+            <h1>Birthday Cake Menu</h1>
+        </div>
+        <div class="menu-content">
+            <div class="menu-section">
+                <h2>Cake Flavors - Buy 1kg, Get 1/2kg Free</h2>
+                <div class="cakes-grid">
+                    <div class="cake-item">
+                        <span>Chocolate Truffle (1/2kg)</span>
+                        <span class="price" id="choco-truffle-1-2kg" data-price="420">$420</span>
+                        <button class="buy-now-btn" onclick="buyNow('Chocolate Truffle (1/2kg)', 420)">Buy Now</button>
+                    </div>
+                    <div class="cake-item">
+                        <span>Chocolate Truffle (1kg)</span>
+                        <span class="price" id="choco-truffle-1kg" data-price="840">$840</span>
+                        <button class="buy-now-btn" onclick="buyNow('Chocolate Truffle (1kg)', 840)">Buy Now</button>
+                    </div>
+
+                    <div class="cake-item">
+                        <span>Vanilla Delight (1/2kg)</span>
+                        <span class="price" id="vanilla-delight-1-2kg" data-price="330">$330</span>
+                        <button class="buy-now-btn" onclick="buyNow('Vanilla Delight (1/2kg)', 330)">Buy Now</button>
+                    </div>
+                    <div class="cake-item">
+                        <span>Vanilla Delight (1kg)</span>
+                        <span class="price" id="vanilla-delight-1kg" data-price="730">$730</span>
+                        <button class="buy-now-btn" onclick="buyNow('Vanilla Delight (1kg)', 730)">Buy Now</button>
+                    </div>
+
+                    <div class="cake-item">
+                        <span>Red Velvet (1/2kg)</span>
+                        <span class="price" id="red-velvet-1-2kg" data-price="550">$550</span>
+                        <button class="buy-now-btn" onclick="buyNow('Red Velvet (1/2kg)', 550)">Buy Now</button>
+                    </div>
+                    <div class="cake-item">
+                        <span>Red Velvet (1kg)</span>
+                        <span class="price" id="red-velvet-1kg" data-price="1100">$1100</span>
+                        <button class="buy-now-btn" onclick="buyNow('Red Velvet (1kg)', 1100)">Buy Now</button>
+                    </div>
+
+                    <div class="cake-item">
+                        <span>Strawberry Bliss (1/2kg)</span>
+                        <span class="price" id="strawberry-bliss-1-2kg" data-price="380">$380</span>
+                        <button class="buy-now-btn" onclick="buyNow('Strawberry Bliss (1/2kg)', 380)">Buy Now</button>
+                    </div>
+                    <div class="cake-item">
+                        <span>Strawberry Bliss (1kg)</span>
+                        <span class="price" id="strawberry-bliss-1kg" data-price="750">$750</span>
+                        <button class="buy-now-btn" onclick="buyNow('Strawberry Bliss (1kg)', 750)">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle the "Buy Now" button for each individual cake
+        function buyNow(cakeName, price) {
+            const quantity = parseInt(prompt(`Enter quantity for ${cakeName}:`, 0));
+            if (quantity > 0) {
+                const total = price * quantity;
+                alert(`${cakeName} - ${quantity} x $${price} = $${total}`);
+            } else {
+                alert('Invalid quantity');
+            }
+        }
+    </script>
+</body>
+</html>
