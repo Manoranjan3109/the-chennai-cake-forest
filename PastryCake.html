@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            text-align: center;
+        }
+
+        .gallery-item img {
+            width: 300px;
+            height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item h2 {
+            margin: 10px 0 5px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .gallery-item .price {
+            margin: 5px 0 10px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .gallery-item button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin: 5px;
+        }
+
+        .gallery-item button:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+
+        .quantity-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .quantity-display {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #total-cost {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        .cart {
+            margin-top: 30px;
+            text-align: left;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .cart ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .cart li {
+            margin: 10px 0;
+        }
+       
+    h3 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .gallery-item {
+        text-align: center;
+    }
+
+    .gallery-item img {
+        width: 300px;
+        height: 300px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .gallery-item img:hover {
+        transform: scale(1.05);
+    }
+
+    .gallery-item h2 {
+        margin: 10px 0 5px;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .gallery-item .price {
+        margin: 5px 0 10px;
+        font-size: 16px;
+        color: #555;
+    }
+
+    .gallery-item button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin: 5px;
+    }
+
+    .gallery-item button:hover {
+        background-color: #45a049;
+        transform: scale(1.1);
+    }
+
+    .quantity-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .quantity-display {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* New styles for cart and total cost section */
+    .cart {
+        margin-top: 30px;
+        text-align: left;
+        font-size: 18px;
+        color: #333;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 30px auto;
+    }
+
+    .cart h3 {
+        font-size: 22px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .cart ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .cart li {
+        margin: 10px 0;
+        font-size: 18px;
+        color: #555;
+    }
+
+    .cart li span {
+        font-weight: bold;
+        color: #333;
+    }
+
+    #total-cost {
+        font-size: 18px;
+        margin-top: 20px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    #total-cost span {
+        color: #e74c3c;
+    }
+
+
+
+    </style>
+</head>
+<body>
+    <h3>Pastry Cake</h3>
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="./picecake.2.jpg" alt="Black Forest Cake">
+            <h2>Black Forest</h2>
+            <div class="price">Price: $50</div>
+            <div class="quantity-controls">
+                <button onclick="decrement('black-forest', 50)">−</button>
+                <div id="black-forest" class="quantity-display">0</div>
+                <button onclick="increment('black-forest', 50)">+</button>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="./picecake3.jpg" alt="Choco Cake">
+            <h2>Choco Cake</h2>
+            <div class="price">Price: $50</div>
+            <div class="quantity-controls">
+                <button onclick="decrement('choco-cake', 50)">−</button>
+                <div id="choco-cake" class="quantity-display">0</div>
+                <button onclick="increment('choco-cake', 50)">+</button>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="./picecake1.jpg" alt="Honey Cake">
+            <h2>Honey Cake</h2>
+            <div class="price">Price: $50</div>
+            <div class="quantity-controls">
+                <button onclick="decrement('honey-cake', 50)">−</button>
+                <div id="honey-cake" class="quantity-display">0</div>
+                <button onclick="increment('honey-cake', 50)">+</button>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="./picecake4.jpg" alt="White Forest">
+            <h2>White Forest</h2>
+            <div class="price">Price: $50</div>
+            <div class="quantity-controls">
+                <button onclick="decrement('white-forest', 50)">−</button>
+                <div id="white-forest" class="quantity-display">0</div>
+                <button onclick="increment('white-forest', 50)">+</button>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="./picecake5.jpg" alt="Red Velvet">
+            <h2>Red Velvet</h2>
+            <div class="price">Price: $50</div>
+            <div class="quantity-controls">
+                <button onclick="decrement('red-velvet', 50)">−</button>
+                <div id="red-velvet" class="quantity-display">0</div>
+                <button onclick="increment('red-velvet', 50)">+</button>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="./picecake6.png" alt="Better Scotch">
+            <h2>Better Scotch</h2>
+            <div class="price">Price: $50</div>
+            <div class="quantity-controls">
+                <button onclick="decrement('better-scotch', 50)">−</button>
+                <div id="better-scotch" class="quantity-display">0</div>
+                <button onclick="increment('better-scotch', 50)">+</button>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="./picecake7.jpg" alt="Mango Cake">
+            <h2>Mango</h2>
+            <div class="price">Price: $50</div>
+            <div class="quantity-controls">
+                <button onclick="decrement('mango', 50)">−</button>
+                <div id="mango" class="quantity-display">0</div>
+                <button onclick="increment('mango', 50)">+</button>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="./picecake8.jfif" alt="Strawberry Cake">
+            <h2>Strawberry</h2>
+            <div class="price">Price: $50</div>
+            <div class="quantity-controls">
+                <button onclick="decrement('strawberry', 50)">−</button>
+                <div id="strawberry" class="quantity-display">0</div>
+                <button onclick="increment('strawberry', 50)">+</button>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <div class="cart">
+        <h3>Items in Cart:</h3>
+        <ul id="cart-list">
+            <!-- Selected items will be listed here -->
+        </ul>
+    </div>
+    <div id="total-cost">
+        Total Cost: $<span id="total-price">0</span>
+    </div>
+
+    <script>
+        // Function to increment the quantity and update the total cost
+        function increment(id, price) {
+            const quantityDisplay = document.getElementById(id);
+            let currentQuantity = parseInt(quantityDisplay.textContent, 10);
+            quantityDisplay.textContent = currentQuantity + 1;
+            updateTotalCost(price);
+            updateCart(id, currentQuantity + 1);
+        }
+
+        // Function to decrement the quantity and update the total cost
+        function decrement(id, price) {
+            const quantityDisplay = document.getElementById(id);
+            let currentQuantity = parseInt(quantityDisplay.textContent, 10);
+            if (currentQuantity > 0) {
+                quantityDisplay.textContent = currentQuantity - 1;
+                updateTotalCost(price);
+                updateCart(id, currentQuantity - 1);
+            }
+        }
+
+        // Function to update the total cost based on all selected quantities
+        function updateTotalCost(price) {
+            let totalCost = 0;
+
+            // Get all quantities and calculate the total cost
+            const allQuantities = document.querySelectorAll('.quantity-display');
+            allQuantities.forEach(quantity => {
+                const quantityValue = parseInt(quantity.textContent, 10);
+                totalCost += quantityValue * price;
+            });
+
+            // Update the total price on the webpage
+            document.getElementById("total-price").textContent = totalCost;
+        }
+
+        // Function to update the cart display
+        function updateCart(id, quantity) {
+            const itemName = id.replace(/-/g, " ").replace(/^\w/, c => c.toUpperCase());
+            const cartList = document.getElementById("cart-list");
+
+            // Check if the item is already in the cart
+            let cartItem = document.getElementById(`cart-${id}`);
+            if (!cartItem) {
+                cartItem = document.createElement("li");
+                cartItem.id = `cart-${id}`;
+                cartList.appendChild(cartItem);
+            }
+
+            // Update the cart item text
+            if (quantity > 0) {
+                cartItem.textContent = `${itemName}: ${quantity}`;
+            } else {
+                cartItem.remove();
+            }
+        }
+    </script>
+</body>
+</html>
